@@ -1,12 +1,22 @@
 package com.kim.dani.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-@EnableWebSecurity//시큐리티를 활성화하겠다라는 애노테이션 webSecurity 를 상속받아야한다.
+//@EnableWebSecurity//시큐리티를 활성화하겠다라는 애노테이션 webSecurity 를 상속받아야한다. 지원종료?
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    // h2 console 하위 모든요청과 favicon 은 모두 무시하는것으로 설정
+    @Override
+    public void configure(WebSecurity web){
+        web
+                .ignoring()
+                .antMatchers("/h2-console/**", "/favicon.ico");
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
